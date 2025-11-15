@@ -26,7 +26,10 @@ export default function IngredientManager({ title, type } : any) {
   };
 
   useEffect(() => {
-    fetchItems();
+    const fetch = async () => {
+      await fetchItems();
+    };
+    fetch();
   }, []);
 
   const addItem = async () => {
@@ -91,19 +94,19 @@ export default function IngredientManager({ title, type } : any) {
   };
 
   return (
-    <div>
+    <div className="p-6 bg-gray-900 min-h-screen text-gray-100">
 
-      <h1 className="text-2xl font-semibold mb-6">{title}</h1>
+      <h1 className="text-2xl font-semibold mb-6 text-gray-100">{title}</h1>
 
       {/* ADD FORM */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <h2 className="text-lg font-medium mb-3">Add New {title}</h2>
+      <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700 mb-6">
+        <h2 className="text-lg font-medium mb-3 text-gray-100">Add New {title}</h2>
 
         <div className="grid grid-cols-2 gap-4">
           <input
             type="text"
             placeholder="Name"
-            className="p-2 border rounded"
+            className="p-2 border border-gray-600 rounded bg-gray-700 text-gray-100"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -111,7 +114,7 @@ export default function IngredientManager({ title, type } : any) {
           <input
             type="number"
             placeholder="Price"
-            className="p-2 border rounded"
+            className="p-2 border border-gray-600 rounded bg-gray-700 text-gray-100"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
@@ -119,7 +122,7 @@ export default function IngredientManager({ title, type } : any) {
           <input
             type="number"
             placeholder="Stock"
-            className="p-2 border rounded"
+            className="p-2 border border-gray-600 rounded bg-gray-700 text-gray-100"
             value={stock}
             onChange={(e) => setStock(e.target.value)}
           />
@@ -127,7 +130,7 @@ export default function IngredientManager({ title, type } : any) {
           <input
             type="number"
             placeholder="Threshold"
-            className="p-2 border rounded"
+            className="p-2 border border-gray-600 rounded bg-gray-700 text-gray-100"
             value={threshold}
             onChange={(e) => setThreshold(e.target.value)}
           />
@@ -135,43 +138,43 @@ export default function IngredientManager({ title, type } : any) {
 
         <button
           onClick={addItem}
-          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="mt-4 bg-blue-700 text-gray-100 px-4 py-2 rounded hover:bg-blue-600 transition"
         >
           Add
         </button>
       </div>
 
       {/* TABLE */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h2 className="text-lg font-medium mb-3">All {title}</h2>
+      <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+        <h2 className="text-lg font-medium mb-3 text-gray-100">All {title}</h2>
 
         {loading ? (
-          <p>Loading...</p>
+          <p className="text-gray-300">Loading...</p>
         ) : items.length === 0 ? (
-          <p>No items found.</p>
+          <p className="text-gray-300">No items found.</p>
         ) : (
-          <table className="w-full text-left border">
+          <table className="w-full text-left border border-gray-600">
             <thead>
-              <tr className="border-b bg-gray-100">
-                <th className="p-2">Name</th>
-                <th className="p-2">Price</th>
-                <th className="p-2">Stock</th>
-                <th className="p-2">Threshold</th>
-                <th className="p-2 text-center">Actions</th>
+              <tr className="border-b border-gray-600 bg-gray-700">
+                <th className="p-2 text-gray-100">Name</th>
+                <th className="p-2 text-gray-100">Price</th>
+                <th className="p-2 text-gray-100">Stock</th>
+                <th className="p-2 text-gray-100">Threshold</th>
+                <th className="p-2 text-center text-gray-100">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               {items.map((item : any) => (
-                <tr key={item._id} className="border-b">
-                  <td className="p-2">{item.name}</td>
+                <tr key={item._id} className="border-b border-gray-600">
+                  <td className="p-2 text-gray-100">{item.name}</td>
 
                   <td className="p-2">
                     <input
                       type="number"
                       defaultValue={item.price}
                       onBlur={(e) => updatePrice(item._id, e.target.value)}
-                      className="p-1 border rounded w-20"
+                      className="p-1 border border-gray-600 rounded w-20 bg-gray-700 text-gray-100"
                     />
                   </td>
 
@@ -180,16 +183,16 @@ export default function IngredientManager({ title, type } : any) {
                       type="number"
                       defaultValue={item.stock}
                       onBlur={(e) => updateStock(item._id, e.target.value)}
-                      className="p-1 border rounded w-20"
+                      className="p-1 border border-gray-600 rounded w-20 bg-gray-700 text-gray-100"
                     />
                   </td>
 
-                  <td className="p-2">{item.threshold}</td>
+                  <td className="p-2 text-gray-100">{item.threshold}</td>
 
                   <td className="p-2 text-center">
                     <button
                       onClick={() => deleteItem(item._id)}
-                      className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                      className="px-3 py-1 bg-red-700 text-gray-100 rounded hover:bg-red-600 transition"
                     >
                       Delete
                     </button>

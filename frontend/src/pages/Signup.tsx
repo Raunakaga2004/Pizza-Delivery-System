@@ -74,44 +74,44 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
+    <div className="flex h-screen items-center justify-center bg-gray-900 px-4">
+      <div className="w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
 
         {step === "form" && (
           <>
-            <h1 className="text-2xl font-semibold text-center mb-6">
+            <h1 className="text-2xl font-semibold text-center mb-6 text-gray-100">
               Create Your Account
             </h1>
 
-            {error && <div className="p-2 mb-4 bg-red-200 text-red-700 rounded">{error}</div>}
+            {error && <div className="p-2 mb-4 bg-red-900 text-red-300 rounded">{error}</div>}
 
             <form onSubmit={handleSubmit} className="space-y-4">
 
               <div>
-                <label className="block font-medium mb-1">Full Name</label>
+                <label className="block font-medium mb-1 text-gray-300">Full Name</label>
                 <input
                   type="text"
                   ref={nameRef}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full p-2 border rounded-xl outline-none focus:ring focus:ring-blue-200"
+                  className="w-full p-2 border border-gray-600 rounded-xl outline-none focus:ring focus:ring-blue-500 bg-gray-700 text-gray-100"
                 />
               </div>
 
               <div>
-                <label className="block font-medium mb-1">Email</label>
+                <label className="block font-medium mb-1 text-gray-300">Email</label>
                 <input
                   type="email"
                   value={mail}
                   onChange={(e) => setMail(e.target.value)}
                   required
-                  className="w-full p-2 border rounded-xl outline-none focus:ring focus:ring-blue-200"
+                  className="w-full p-2 border border-gray-600 rounded-xl outline-none focus:ring focus:ring-blue-500 bg-gray-700 text-gray-100"
                 />
               </div>
 
               <div>
-                <label className="block font-medium mb-1">Password</label>
+                <label className="block font-medium mb-1 text-gray-300">Password</label>
                 <div className="relative">
                   <input
                     type={showPass ? "text" : "password"}
@@ -119,12 +119,12 @@ export default function Signup() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={6}
-                    className="w-full p-2 border rounded-xl outline-none focus:ring focus:ring-blue-200 pr-10"
+                    className="w-full p-2 border border-gray-600 rounded-xl outline-none focus:ring focus:ring-blue-500 pr-10 bg-gray-700 text-gray-100"
                   />
 
                   <span
                     onClick={() => setShowPass((prev) => !prev)}
-                    className="absolute right-3 top-2 text-sm cursor-pointer text-gray-500"
+                    className="absolute right-3 top-2 text-sm cursor-pointer text-gray-400"
                   >
                     {showPass ? "Hide" : "Show"}
                   </span>
@@ -133,17 +133,17 @@ export default function Signup() {
 
               <button
                 disabled={loading}
-                className="w-full py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition disabled:opacity-40"
+                className="w-full py-2 bg-blue-700 text-gray-100 rounded-xl font-medium hover:bg-blue-600 transition disabled:opacity-40"
               >
                 {loading ? "Creating..." : "Sign Up"}
               </button>
             </form>
 
-            <p className="mt-4 text-center">
+            <p className="mt-4 text-center text-gray-300">
               Already have an account?{" "}
               <span
                 onClick={() => navigate("/login")}
-                className="text-blue-600 hover:underline cursor-pointer"
+                className="text-blue-400 hover:underline cursor-pointer"
               >
                 Login here
               </span>
@@ -153,27 +153,27 @@ export default function Signup() {
 
         {step === "verify" && (
           <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">Verify Your Email</h2>
+            <h2 className="text-xl font-semibold mb-4 text-gray-100">Verify Your Email</h2>
 
-            <p className="text-gray-700 mb-3">
+            <p className="text-gray-300 mb-3">
               We've sent a verification link to:
             </p>
 
-            <p className="font-semibold mb-3">{mail}</p>
+            <p className="font-semibold mb-3 text-gray-100">{mail}</p>
 
-            <p className="text-sm text-gray-600 mb-6">
+            <p className="text-sm text-gray-400 mb-6">
               Please open your inbox and click on the link to activate your account.
               You cannot log in until your email is verified.
             </p>
 
             {success && (
-              <div className="p-2 mb-4 bg-green-200 text-green-700 rounded">
+              <div className="p-2 mb-4 bg-green-900 text-green-300 rounded">
                 {success}
               </div>
             )}
 
             {error && (
-              <div className="p-2 mb-4 bg-red-200 text-red-700 rounded">
+              <div className="p-2 mb-4 bg-red-900 text-red-300 rounded">
                 {error}
               </div>
             )}
@@ -181,19 +181,19 @@ export default function Signup() {
             <button
               disabled={cooldown > 0}
               onClick={handleResend}
-              className={`w-full py-2 rounded-xl text-white font-medium transition 
-                ${cooldown > 0 ? "bg-gray-500" : "bg-blue-600 hover:bg-blue-700"}`}
+              className={`w-full py-2 rounded-xl text-gray-100 font-medium transition
+                ${cooldown > 0 ? "bg-gray-600" : "bg-blue-700 hover:bg-blue-600"}`}
             >
               {cooldown > 0
                 ? `Resend in ${cooldown}s`
                 : "Resend Verification Email"}
             </button>
 
-            <p className="mt-6 text-center text-sm">
+            <p className="mt-6 text-center text-sm text-gray-300">
               Already verified?{" "}
               <span
                 onClick={() => navigate("/login")}
-                className="text-blue-600 hover:underline cursor-pointer"
+                className="text-blue-400 hover:underline cursor-pointer"
               >
                 Login now
               </span>

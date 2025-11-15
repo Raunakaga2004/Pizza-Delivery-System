@@ -31,23 +31,7 @@ export default function CreatePizza() {
   const token = localStorage.getItem("customer_token");
   const headers = { Authorization: `Bearer ${token}` };
 
-  // Fetch all pizzas so ingredients can be extracted
-  const loadIngredients = async () => {
-    try {
-      const res = await axios.get(`${api}/customer/order`, { headers });
 
-      const pizzas = res.data.pizzas || [];
-
-      setBases(extractUnique(pizzas.map((p: any) => p.base)));
-      setSauces(extractUnique(pizzas.map((p: any) => p.sauce)));
-      setCheeses(extractUnique(pizzas.map((p: any) => p.cheese)));
-
-      const vegList = pizzas.flatMap((p: any) => p.veggies || []);
-      setVeggies(extractUnique(vegList));
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   // Utility - remove duplicates + null
   const extractUnique = (items: any[]) => {
@@ -58,8 +42,27 @@ export default function CreatePizza() {
     return Array.from(map.values());
   };
 
-  // Calculate total pizza price
-  const calcPrice = () => {
+  useEffect(() => {
+    const loadIngredients = async () => {
+      try {
+        const res = await axios.get(`${api}/customer/order`, { headers });
+
+        const pizzas = res.data.pizzas || [];
+
+        setBases(extractUnique(pizzas.map((p: any) => p.base)));
+        setSauces(extractUnique(pizzas.map((p: any) => p.sauce)));
+        setCheeses(extractUnique(pizzas.map((p: any) => p.cheese)));
+
+        const vegList = pizzas.flatMap((p: any) => p.veggies || []);
+        setVeggies(extractUnique(vegList));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    loadIngredients();
+  }, []);
+
+  useEffect(() => {
     let total = 0;
 
     if (baseId) total += bases.find((b) => b._id === baseId)?.price || 0;
@@ -71,15 +74,7 @@ export default function CreatePizza() {
     });
 
     setPrice(total);
-  };
-
-  useEffect(() => {
-    loadIngredients();
-  }, []);
-
-  useEffect(() => {
-    calcPrice();
-  }, [baseId, sauceId, cheeseId, veggieIds]);
+  }, [baseId, sauceId, cheeseId, veggieIds, bases, sauces, cheeses, veggies]);
 
   // Submit custom pizza
   const handleSubmit = async (e: any) => {
@@ -112,40 +107,40 @@ export default function CreatePizza() {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="p-6 max-w-2xl mx-auto bg-gray-900 min-h-screen text-gray-100">
 
-      <h1 className="text-2xl font-semibold mb-6">Create Custom Pizza</h1>
+      <h1 className="text-2xl font-semibold mb-6 text-gray-100">Create Custom Pizza</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
 
         {/* Title */}
         <div>
-          <label className="block mb-1 font-medium">Pizza Name</label>
+          <label className="block mb-1 font-medium text-gray-100">Pizza Name</label>
           <input
             type="text"
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-600 rounded bg-gray-800 text-gray-100"
           />
         </div>
 
         {/* Description */}
         <div>
-          <label className="block mb-1 font-medium">Description</label>
+          <label className="block mb-1 font-medium text-gray-100">Description</label>
           <textarea
             rows={3}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border border-gray-600 rounded bg-gray-800 text-gray-100"
           />
         </div>
 
         {/* Base */}
         <div>
-          <label className="block mb-1 font-medium">Choose Base</label>
+          <label className="block mb-1 font-medium text-gray-100">Choose Base</label>
           <select
-            className="p-2 border rounded w-full"
+            className="p-2 border border-gray-600 rounded w-full bg-gray-800 text-gray-100"
             value={baseId}
             onChange={(e) => setBaseId(e.target.value)}
           >
@@ -160,9 +155,9 @@ export default function CreatePizza() {
 
         {/* Sauce */}
         <div>
-          <label className="block mb-1 font-medium">Choose Sauce</label>
+          <label className="block mb-1 font-medium text-gray-100">Choose Sauce</label>
           <select
-            className="p-2 border rounded w-full"
+            className="p-2 border border-gray-600 rounded w-full bg-gray-800 text-gray-100"
             value={sauceId}
             onChange={(e) => setSauceId(e.target.value)}
           >
@@ -177,9 +172,9 @@ export default function CreatePizza() {
 
         {/* Cheese */}
         <div>
-          <label className="block mb-1 font-medium">Choose Cheese</label>
+          <label className="block mb-1 font-medium text-gray-100">Choose Cheese</label>
           <select
-            className="p-2 border rounded w-full"
+            className="p-2 border border-gray-600 rounded w-full bg-gray-800 text-gray-100"
             value={cheeseId}
             onChange={(e) => setCheeseId(e.target.value)}
           >
@@ -194,9 +189,9 @@ export default function CreatePizza() {
 
         {/* Veggies */}
         <div>
-          <label className="block mb-1 font-medium">Choose Veggies</label>
+          <label className="block mb-1 font-medium text-gray-100">Choose Veggies</label>
           <select
-            className="p-2 border rounded w-full"
+            className="p-2 border border-gray-600 rounded w-full bg-gray-800 text-gray-100"
             multiple
             value={veggieIds}
             onChange={(e) =>
@@ -215,14 +210,14 @@ export default function CreatePizza() {
         </div>
 
         {/* Price */}
-        <div className="bg-gray-100 p-3 rounded border text-lg font-medium">
+        <div className="bg-gray-800 p-3 rounded border border-gray-600 text-lg font-medium text-gray-100">
           Total Price: ₹{price}
         </div>
 
         {/* Submit */}
         <button
           disabled={loading}
-          className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          className="w-full py-2 bg-blue-700 text-gray-100 rounded-lg hover:bg-blue-600 disabled:opacity-50 transition"
         >
           {loading ? "Creating..." : "Create Pizza"}
         </button>

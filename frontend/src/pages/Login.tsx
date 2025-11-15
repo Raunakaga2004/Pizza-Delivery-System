@@ -41,15 +41,15 @@ export default function Login() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
-        
-        <h1 className="text-2xl font-semibold text-center mb-6">
+    <div className="flex h-screen items-center justify-center bg-gray-900 px-4">
+      <div className="w-full max-w-md bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+
+        <h1 className="text-2xl font-semibold text-center mb-6 text-gray-100">
           Customer Login
         </h1>
 
         {error && (
-          <div className="p-2 mb-4 bg-red-200 text-red-700 rounded">
+          <div className="p-2 mb-4 bg-red-900 text-red-300 rounded">
             {error}
           </div>
         )}
@@ -57,19 +57,19 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="space-y-4">
 
           <div>
-            <label className="block font-medium mb-1">Email</label>
+            <label className="block font-medium mb-1 text-gray-300">Email</label>
             <input
               type="email"
               ref={emailRef}
               value={mail}
               onChange={(e) => setMail(e.target.value)}
               required
-              className="w-full p-2 border rounded-xl outline-none focus:ring focus:ring-blue-200"
+              className="w-full p-2 border border-gray-600 rounded-xl outline-none focus:ring focus:ring-blue-500 bg-gray-700 text-gray-100"
             />
           </div>
 
           <div>
-            <label className="block font-medium mb-1">Password</label>
+            <label className="block font-medium mb-1 text-gray-300">Password</label>
 
             <div className="relative">
               <input
@@ -77,12 +77,12 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full p-2 border rounded-xl outline-none focus:ring focus:ring-blue-200 pr-10"
+                className="w-full p-2 border border-gray-600 rounded-xl outline-none focus:ring focus:ring-blue-500 pr-10 bg-gray-700 text-gray-100"
               />
 
               <span
                 onClick={() => setShowPass((prev) => !prev)}
-                className="absolute right-3 top-2 text-sm cursor-pointer text-gray-500"
+                className="absolute right-3 top-2 text-sm cursor-pointer text-gray-400"
               >
                 {showPass ? "Hide" : "Show"}
               </span>
@@ -91,25 +91,25 @@ export default function Login() {
 
           <p
             onClick={() => navigate("/forgot-password")}
-            className="text-right text-blue-600 text-sm hover:underline cursor-pointer"
+            className="text-right text-blue-400 text-sm hover:underline cursor-pointer"
           >
             Forgot Password?
           </p>
 
           <button
             disabled={loading}
-            className="w-full py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition disabled:opacity-50"
+            className="w-full py-2 bg-blue-700 text-gray-100 rounded-xl font-medium hover:bg-blue-600 transition disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Login"}
           </button>
 
         </form>
 
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center text-gray-300">
           Don't have an account?{" "}
           <span
             onClick={() => navigate("/signup")}
-            className="text-blue-600 hover:underline cursor-pointer"
+            className="text-blue-400 hover:underline cursor-pointer"
           >
             Sign up
           </span>

@@ -47,32 +47,32 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-50 px-4">
-      <div className="max-w-md w-full bg-white p-6 rounded shadow">
-        <h2 className="text-xl font-semibold mb-4">Reset Password</h2>
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
+      <div className="max-w-md w-full bg-gray-800 p-6 rounded shadow border border-gray-700">
+        <h2 className="text-xl font-semibold mb-4 text-gray-100">Reset Password</h2>
 
-        {error && <div className="mb-3 p-2 bg-red-100 text-red-800 rounded">{error}</div>}
-        {success && <div className="mb-3 p-2 bg-green-100 text-green-800 rounded">{success}</div>}
+        {error && <div className="mb-3 p-2 bg-red-900 text-red-300 rounded">{error}</div>}
+        {success && <div className="mb-3 p-2 bg-green-900 text-green-300 rounded">{success}</div>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block mb-1 font-medium">New Password</label>
+            <label className="block mb-1 font-medium text-gray-100">New Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-gray-100"
               required
             />
           </div>
 
           <div>
-            <label className="block mb-1 font-medium">Confirm Password</label>
+            <label className="block mb-1 font-medium text-gray-100">Confirm Password</label>
             <input
               type="password"
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border border-gray-600 rounded bg-gray-700 text-gray-100"
               required
             />
           </div>
@@ -80,15 +80,15 @@ export default function ResetPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 bg-blue-600 text-white rounded disabled:opacity-60"
+            className="w-full py-2 bg-blue-700 text-gray-100 rounded hover:bg-blue-600 disabled:opacity-60 transition"
           >
             {loading ? "Resetting..." : "Reset Password"}
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm">
+        <p className="mt-4 text-center text-sm text-gray-300">
           Back to{" "}
-          <button onClick={() => navigate("/login")} className="text-blue-600 underline">
+          <button onClick={() => navigate("/login")} className="text-blue-400 underline hover:text-blue-300">
             Login
           </button>
         </p>
