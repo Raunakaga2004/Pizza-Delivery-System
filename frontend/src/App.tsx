@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 
+import LandingPage from './pages/LandingPage'
 import AdminLogin from './pages/AdminLogin'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -23,7 +24,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        
+        <Route path="/" element={<LandingPage />} />
+
         {/* Customer Routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

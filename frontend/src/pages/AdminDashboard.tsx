@@ -28,25 +28,25 @@ export default function AdminDashboard() {
 
     setAdminName(name || "Admin");
 
+    const fetchOrders = async (token: string) => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/admin/order`,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+
+        setOrders(res.data.orders || []);
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    };
+
     fetchOrders(token);
   }, []);
-
-  const fetchOrders = async (token : any) => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/admin/order`,
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-
-      setOrders(res.data.orders || []);
-    } catch (err) {
-      console.error(err);
-    }
-
-    setLoading(false);
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("admin_token");
@@ -55,77 +55,77 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <div className="w-64 bg-white shadow-md p-5 flex flex-col">
-        <h2 className="text-xl font-semibold mb-8">Admin Panel</h2>
+    <div className="flex h-screen bg-gray-900 text-gray-100">
+      <div className="w-64 bg-gray-800 shadow-md p-5 flex flex-col border-r border-gray-700">
+        <h2 className="text-xl font-semibold mb-8 text-gray-100">Admin Panel</h2>
 
         <div className="space-y-4">
-          <button onClick={() => navigate("/admin/dashboard")} className="w-full text-left p-2 rounded hover:bg-gray-200">Dashboard Home</button>
-          <button onClick={() => navigate("/admin/manage/bases")} className="w-full text-left p-2 rounded hover:bg-gray-200">Manage Bases</button>
-          <button onClick={() => navigate("/admin/manage/sauces")} className="w-full text-left p-2 rounded hover:bg-gray-200">Manage Sauces</button>
-          <button onClick={() => navigate("/admin/manage/cheese")} className="w-full text-left p-2 rounded hover:bg-gray-200">Manage Cheese</button>
-          <button onClick={() => navigate("/admin/manage/veggies")} className="w-full text-left p-2 rounded hover:bg-gray-200">Manage Veggies</button>
-          <button onClick={() => navigate("/admin/manage/pizzas")} className="w-full text-left p-2 rounded hover:bg-gray-200">Manage Pizza Variants</button>
-          <button onClick={() => navigate("/admin/orders")} className="w-full text-left p-2 rounded hover:bg-gray-200">Orders</button>
+          <button onClick={() => navigate("/admin/dashboard")} className="w-full text-left p-2 rounded hover:bg-gray-700 text-gray-100 transition">Dashboard Home</button>
+          <button onClick={() => navigate("/admin/manage/bases")} className="w-full text-left p-2 rounded hover:bg-gray-700 text-gray-100 transition">Manage Bases</button>
+          <button onClick={() => navigate("/admin/manage/sauces")} className="w-full text-left p-2 rounded hover:bg-gray-700 text-gray-100 transition">Manage Sauces</button>
+          <button onClick={() => navigate("/admin/manage/cheese")} className="w-full text-left p-2 rounded hover:bg-gray-700 text-gray-100 transition">Manage Cheese</button>
+          <button onClick={() => navigate("/admin/manage/veggies")} className="w-full text-left p-2 rounded hover:bg-gray-700 text-gray-100 transition">Manage Veggies</button>
+          <button onClick={() => navigate("/admin/manage/pizzas")} className="w-full text-left p-2 rounded hover:bg-gray-700 text-gray-100 transition">Manage Pizza Variants</button>
+          <button onClick={() => navigate("/admin/orders")} className="w-full text-left p-2 rounded hover:bg-gray-700 text-gray-100 transition">Orders</button>
         </div>
 
         <div className="mt-auto pt-5">
-          <button onClick={handleLogout} className="w-full py-2 bg-red-600 text-white rounded hover:bg-red-700">
+          <button onClick={handleLogout} className="w-full py-2 bg-red-700 text-gray-100 rounded hover:bg-red-600 transition">
             Logout
           </button>
         </div>
       </div>
 
       <div className="flex-1 p-6 overflow-y-auto">
-        
+
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-semibold">Welcome, {adminName}</h1>
+          <h1 className="text-2xl font-semibold text-gray-100">Welcome, {adminName}</h1>
         </div>
 
         {loading ? (
-          <div className="text-center mt-20">Loading orders...</div>
+          <div className="text-center mt-20 text-gray-300">Loading orders...</div>
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="text-lg font-medium">Total Orders</h3>
-                <p className="text-3xl mt-2 font-bold">{totalOrders}</p>
+              <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+                <h3 className="text-lg font-medium text-gray-100">Total Orders</h3>
+                <p className="text-3xl mt-2 font-bold text-gray-100">{totalOrders}</p>
               </div>
 
-              <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="text-lg font-medium">Total Pizzas Sold</h3>
-                <p className="text-3xl mt-2 font-bold">{totalPizzas}</p>
+              <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+                <h3 className="text-lg font-medium text-gray-100">Total Pizzas Sold</h3>
+                <p className="text-3xl mt-2 font-bold text-gray-100">{totalPizzas}</p>
               </div>
 
-              <div className="bg-white p-4 rounded-lg shadow">
-                <h3 className="text-lg font-medium">Pending Deliveries</h3>
-                <p className="text-3xl mt-2 font-bold">{pendingDeliveries}</p>
+              <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+                <h3 className="text-lg font-medium text-gray-100">Pending Deliveries</h3>
+                <p className="text-3xl mt-2 font-bold text-gray-100">{pendingDeliveries}</p>
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow mt-8">
-              <h2 className="text-xl font-semibold mb-4">Ongoing Orders</h2>
+            <div className="bg-gray-800 p-6 rounded-lg shadow border border-gray-700 mt-8">
+              <h2 className="text-xl font-semibold mb-4 text-gray-100">Ongoing Orders</h2>
 
               {ongoingOrders.length === 0 ? (
-                <p className="text-gray-500">No ongoing orders right now.</p>
+                <p className="text-gray-400">No ongoing orders right now.</p>
               ) : (
-                <table className="w-full text-left border">
+                <table className="w-full text-left border border-gray-600">
                   <thead>
-                    <tr className="border-b bg-gray-100">
-                      <th className="p-2">Order ID</th>
-                      <th className="p-2">Customer</th>
-                      <th className="p-2">Status</th>
-                      <th className="p-2">Total Price</th>
+                    <tr className="border-b border-gray-600 bg-gray-700">
+                      <th className="p-2 text-gray-100">Order ID</th>
+                      <th className="p-2 text-gray-100">Customer</th>
+                      <th className="p-2 text-gray-100">Status</th>
+                      <th className="p-2 text-gray-100">Total Price</th>
                     </tr>
                   </thead>
 
                   <tbody>
                     {ongoingOrders.map((ord : any) => (
-                      <tr key={ord._id} className="border-b">
-                        <td className="p-2">{ord._id}</td>
-                        <td className="p-2">{ord.userId?.name}</td>
-                        <td className="p-2 font-medium">{ord.status}</td>
-                        <td className="p-2">₹{ord.totalprice}</td>
+                      <tr key={ord._id} className="border-b border-gray-600">
+                        <td className="p-2 text-gray-100">{ord._id}</td>
+                        <td className="p-2 text-gray-100">{ord.userId?.name}</td>
+                        <td className="p-2 font-medium text-gray-100">{ord.status}</td>
+                        <td className="p-2 text-gray-100">₹{ord.totalprice}</td>
                       </tr>
                     ))}
                   </tbody>

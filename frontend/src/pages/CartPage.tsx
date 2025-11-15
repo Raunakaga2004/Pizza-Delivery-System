@@ -48,7 +48,10 @@ export default function CartPage() {
   };
 
   useEffect(() => {
-    loadCart();
+    const load = async () => {
+      await loadCart();
+    };
+    load();
   }, []);
 
   // Update quantity
@@ -94,19 +97,19 @@ export default function CartPage() {
     }
   };
 
-  if (loading) return <div className="p-6">Loading cart...</div>;
+  if (loading) return <div className="p-6 bg-gray-900 min-h-screen text-gray-300">Loading cart...</div>;
 
   return (
-    <div className="p-6">
+    <div className="p-6 bg-gray-900 min-h-screen text-gray-100">
 
       {/* Header */}
-      <h1 className="text-2xl font-semibold mb-6">Your Cart</h1>
+      <h1 className="text-2xl font-semibold mb-6 text-gray-100">Your Cart</h1>
 
       {!cart || cart.orders.length === 0 ? (
         <div>
-          <p>Your cart is empty.</p>
+          <p className="text-gray-300">Your cart is empty.</p>
           <button
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg"
+            className="mt-4 px-4 py-2 bg-blue-700 text-gray-100 rounded-lg hover:bg-blue-600 transition"
             onClick={() => navigate("/customer/dashboard")}
           >
             Go Back
@@ -119,11 +122,11 @@ export default function CartPage() {
           {cart.orders.map((item, idx) => (
             <div
               key={idx}
-              className="flex justify-between items-center bg-white p-4 rounded-lg shadow"
+              className="flex justify-between items-center bg-gray-800 p-4 rounded-lg shadow border border-gray-700"
             >
               <div>
-                <p className="font-medium">{item.pizza.title}</p>
-                <p className="text-sm text-gray-600">
+                <p className="font-medium text-gray-100">{item.pizza.title}</p>
+                <p className="text-sm text-gray-400">
                   ₹{item.pizza.price} × {item.quantity}
                 </p>
               </div>
@@ -131,7 +134,7 @@ export default function CartPage() {
               {/* Controls */}
               <div className="flex items-center gap-2">
                 <button
-                  className="px-3 py-1 bg-gray-300 rounded"
+                  className="px-3 py-1 bg-gray-700 text-gray-100 rounded hover:bg-gray-600 transition"
                   onClick={() =>
                     updateQuantity(item.pizza._id, item.quantity - 1)
                   }
@@ -139,10 +142,10 @@ export default function CartPage() {
                   -
                 </button>
 
-                <span className="px-3">{item.quantity}</span>
+                <span className="px-3 text-gray-100">{item.quantity}</span>
 
                 <button
-                  className="px-3 py-1 bg-gray-300 rounded"
+                  className="px-3 py-1 bg-gray-700 text-gray-100 rounded hover:bg-gray-600 transition"
                   onClick={() =>
                     updateQuantity(item.pizza._id, item.quantity + 1)
                   }
@@ -151,7 +154,7 @@ export default function CartPage() {
                 </button>
 
                 <button
-                  className="ml-4 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                  className="ml-4 px-3 py-1 bg-red-700 text-gray-100 rounded hover:bg-red-600 transition"
                   onClick={() => removeItem(item.pizza._id)}
                 >
                   Remove
@@ -161,15 +164,15 @@ export default function CartPage() {
           ))}
 
           {/* Summary */}
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h2 className="text-lg font-semibold mb-2">Summary</h2>
-            <p className="text-xl font-bold">Total: ₹{cart.totalprice}</p>
+          <div className="bg-gray-800 p-4 rounded-lg shadow border border-gray-700">
+            <h2 className="text-lg font-semibold mb-2 text-gray-100">Summary</h2>
+            <p className="text-xl font-bold text-gray-100">Total: ₹{cart.totalprice}</p>
           </div>
 
           {/* Place Order Button */}
           <button
             onClick={placeOrder}
-            className="w-full py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700"
+            className="w-full py-2 bg-orange-700 text-gray-100 rounded-lg hover:bg-orange-600 transition"
           >
             Proceed to Checkout
           </button>

@@ -6,7 +6,7 @@ export default function VerifyEmail() {
   const { token } = useParams();
   const navigate = useNavigate();
 
-  const [status, setStatus] = useState("loading"); 
+  const [status, setStatus] = useState("loading");
   // "loading" | "success" | "error"
 
   const [message, setMessage] = useState("");
@@ -18,50 +18,50 @@ export default function VerifyEmail() {
       return;
     }
 
-    verifyEmail();
+    const verify = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/customer/auth/verify-email/${token}`
+        );
+
+        setStatus("success");
+        setMessage(res.data.message || "Email verified successfully!");
+
+        // Redirect to login after 2 seconds
+        setTimeout(() => navigate("/login"), 2000);
+
+      } catch (err : any) {
+        setStatus("error");
+
+        if (err.response?.data?.message) {
+          setMessage(err.response.data.message);
+        } else {
+          setMessage("Verification failed. Link may be expired.");
+        }
+      }
+    };
+
+    verify();
   }, [token]);
 
-  const verifyEmail = async () => {
-    try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/customer/auth/verify-email/${token}`
-      );
-
-      setStatus("success");
-      setMessage(res.data.message || "Email verified successfully!");
-
-      // Redirect to login after 2 seconds
-      setTimeout(() => navigate("/login"), 2000);
-
-    } catch (err : any) {
-      setStatus("error");
-
-      if (err.response?.data?.message) {
-        setMessage(err.response.data.message);
-      } else {
-        setMessage("Verification failed. Link may be expired.");
-      }
-    }
-  };
-
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100 px-6">
-      <div className="bg-white p-6 rounded-xl shadow-md max-w-md w-full text-center">
+    <div className="flex min-h-screen items-center justify-center bg-gray-900 px-6">
+      <div className="bg-gray-800 p-6 rounded-xl shadow-md max-w-md w-full text-center border border-gray-700">
 
         {status === "loading" && (
           <>
-            <h2 className="text-xl font-semibold mb-4">Verifying your email…</h2>
-            <p className="text-gray-600">Please wait…</p>
-            <div className="mt-4 animate-spin border-4 border-blue-600 border-t-transparent w-10 h-10 rounded-full mx-auto" />
+            <h2 className="text-xl font-semibold mb-4 text-gray-100">Verifying your email…</h2>
+            <p className="text-gray-400">Please wait…</p>
+            <div className="mt-4 animate-spin border-4 border-blue-500 border-t-transparent w-10 h-10 rounded-full mx-auto" />
           </>
         )}
 
         {status === "success" && (
           <>
-            <h2 className="text-xl font-semibold text-green-600 mb-4">
+            <h2 className="text-xl font-semibold text-green-400 mb-4">
               Email Verified!
             </h2>
-            <p className="mb-4">{message}</p>
+            <p className="mb-4 text-gray-100">{message}</p>
             <p className="text-gray-500 text-sm">
               Redirecting to login…
             </p>
@@ -70,14 +70,14 @@ export default function VerifyEmail() {
 
         {status === "error" && (
           <>
-            <h2 className="text-xl font-semibold text-red-600 mb-4">
+            <h2 className="text-xl font-semibold text-red-400 mb-4">
               Verification Failed
             </h2>
-            <p className="mb-6">{message}</p>
+            <p className="mb-6 text-gray-100">{message}</p>
 
             <button
               onClick={() => navigate("/login")}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+              className="bg-blue-700 text-gray-100 px-4 py-2 rounded-lg hover:bg-blue-600 transition"
             >
               Go to Login
             </button>
